@@ -3,24 +3,27 @@
 # Options: https://github.com/The-PR-Agent/pr-agent/blob/v0.50.0/pr_agent/settings/configuration.toml
 
 [github_app]
-# Review draft pull requests too, and run /describe and /review again on every push.
+# Review draft pull requests too, and run /describe and /review again after each push by a person.
+# The PR-Agent host skips pull requests and pushes from bot accounts.
 feedback_on_draft_pr = true
 handle_push_trigger = true
 
 [pr_reviewer]
 num_max_findings = 5
 extra_instructions = """\
-Also check these rules:
+Repository rules. Check every rule in each area the diff touches. A changed line that breaks one is a finding.
 
-Org profile (`profile/README.md`, the only published file):
-- Every link points to an existing jan-made repository or site, and its description matches what that repository contains.
-- Each entry is one line under `## Websites` or `## Nette / PHP libraries`: bold link, em dash, short description.
-- The file stays a short public list, with no internal notes or TODOs.
+Org profile (`profile/README.md`):
+- Each link's text is the repository name, and its URL is `https://github.com/jan-made/` followed by that same name.
+- Each entry is one line under the matching section (`## Websites` or `## Nette / PHP libraries`): bold link, em dash, short description.
+- Flag internal notes, TODOs or private links: the file is the public org profile.
 """
 
 [pr_code_suggestions]
 # Publish only suggestions scored 5 or higher (0-10).
 suggestions_score_threshold = 5
+# Drop a suggestion whose score could not be computed; the default 7 would publish it.
+score_on_reflection_failure = 4
 extra_instructions = "Prefer existing project helpers and patterns over new abstractions."
 
 [ignore]
