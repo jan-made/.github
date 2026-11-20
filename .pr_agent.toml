@@ -1,0 +1,30 @@
+# PR-Agent settings for this repository. PR-Agent reads this file from the
+# default branch (main).
+# Options: https://github.com/The-PR-Agent/pr-agent/blob/v0.50.0/pr_agent/settings/configuration.toml
+
+[github_app]
+# Review draft pull requests too, and run /describe and /review again on every push.
+feedback_on_draft_pr = true
+handle_push_trigger = true
+
+[pr_reviewer]
+num_max_findings = 5
+extra_instructions = """\
+Also check these rules:
+
+Org profile (`profile/README.md`, the only published file):
+- Every link points to an existing jan-made repository or site, and its description matches what that repository contains.
+- Each entry is one line under `## Websites` or `## Nette / PHP libraries`: bold link, em dash, short description.
+- The file stays a short public list, with no internal notes or TODOs.
+"""
+
+[pr_code_suggestions]
+# Publish only suggestions scored 5 or higher (0-10).
+suggestions_score_threshold = 5
+extra_instructions = "Prefer existing project helpers and patterns over new abstractions."
+
+[ignore]
+# Generated code and lock files. Replaces the default list; keep vendor/** first.
+glob = [
+    "vendor/**",
+]
